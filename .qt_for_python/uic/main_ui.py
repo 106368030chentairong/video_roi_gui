@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main_ui.ui'
+# Form implementation generated from reading ui file '/Users/tairong/Desktop/video_roi_gui/main_ui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -27,9 +27,9 @@ class Ui_MainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.pushButton = QtWidgets.QPushButton(self.gridLayoutWidget)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout.addWidget(self.pushButton, 0, 0, 1, 1)
+        self.btn_open_file = QtWidgets.QPushButton(self.gridLayoutWidget)
+        self.btn_open_file.setObjectName("btn_open_file")
+        self.gridLayout.addWidget(self.btn_open_file, 0, 0, 1, 1)
         self.pushButton_3 = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.pushButton_3.setObjectName("pushButton_3")
         self.gridLayout.addWidget(self.pushButton_3, 0, 2, 1, 1)
@@ -69,19 +69,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "OpenFile"))
+        self.btn_open_file.setText(_translate("MainWindow", "OpenFile"))
         self.pushButton_3.setText(_translate("MainWindow", "Pause"))
         self.pushButton_2.setText(_translate("MainWindow", "Stop"))
         self.pushButton_4.setText(_translate("MainWindow", "Play"))
         self.label_img.setText(_translate("MainWindow", "video"))
         self.label_file_namel.setText(_translate("MainWindow", "TextLabel"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

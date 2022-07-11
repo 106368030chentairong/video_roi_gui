@@ -1,8 +1,8 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QFileDialog
-import cv2
 from lib.main_ui import Ui_MainWindow
+from lib.img_controller import img_controller
 
 class MainWindow_controller(QtWidgets.QMainWindow):
     def __init__(self):
@@ -12,29 +12,25 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.setup_control()
 
     def setup_control(self):
-        # TODO        
-        self.img_path = 'cat.jpg'
-        self.ui.btn_zoom_in.clicked.connect(self.func_zoom_in) 
-        self.ui.btn_zoom_out.clicked.connect(self.func_zoom_out)
-        self.display_img()
+        self.file_path = ''
+        self.img_controller = img_controller(img_path=self.file_path,
+                                             label_img=self.ui.label_img,
+                                             label_file_path=self.ui.label_file_name,
+                                             label_ratio=self.ui.label_ratio,
+                                             label_img_shape=self.ui.label_img_shape)
 
-    def display_img(self):
-        self.img = cv2.imread(self.img_path)
-        height, width, channel = self.img.shape
-        bytesPerline = 3 * width
-        self.qimg = QImage(self.img, width, height, bytesPerline, QImage.Format_RGB888).rgbSwapped()
-        self.qpixmap = QPixmap.fromImage(self.qimg)
-        self.qpixmap_height = self.qpixmap.height()
-        self.ui.label.setPixmap(QPixmap.fromImage(self.qimg))
+        self.ui.btn_open_file.clicked.connect(self.open_file)         
+        self.ui.btn_zoom_in.clicked.connect(self.img_controller.set_zoom_in)
+        self.ui.btn_zoom_out.clicked.connect(self.img_controller.set_zoom_out)
+        self.ui.slider_zoom.valueChanged.connect(self.getslidervalue)
 
-    def func_zoom_in(self):
-        self.qpixmap_height -= 100
-        self.resize_image()
+    def open_file(self):
+        filename, filetype = QFileDialog.getOpenFileName(self, "Open file", "./") # start path        
+        self.init_new_picture(filename)
 
-    def func_zoom_out(self):
-        self.qpixmap_height += 100
-        self.resize_image()
+    def init_new_picture(self, filename):
+        self.ui.slider_zoom.setProperty("value", 50)
+        self.img_controller.set_path(filename)        
 
-    def resize_image(self):
-        scaled_pixmap = self.qpixmap.scaledToHeight(self.qpixmap_height)
-        self.ui.label.setPixmap(scaled_pixmap)
+    def getslidervalue(self):        
+        self.img_controller.set_slider_value(self.ui.slider_zoom.value()+1)
